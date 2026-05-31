@@ -1,0 +1,233 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \\documentclass[12pt, a4paper]\{article\}\
+\
+\\usepackage[margin=2.5cm]\{geometry\}\
+\\usepackage\{hyperref\}\
+\\usepackage\{booktabs\}\
+\\usepackage\{array\}\
+\\usepackage\{parskip\}\
+\\usepackage\{titlesec\}\
+\\usepackage\{xcolor\}\
+\\usepackage\{microtype\}\
+\\usepackage\{lmodern\}\
+\\usepackage[T1]\{fontenc\}\
+\\usepackage[utf8]\{inputenc\}\
+\
+\\hypersetup\{\
+    colorlinks=true,\
+    linkcolor=blue!60!black,\
+    urlcolor=blue!60!black,\
+    citecolor=blue!60!black\
+\}\
+\
+\\titleformat\{\\section\}\{\\large\\bfseries\}\{\}\{0em\}\{\}[\\titlerule]\
+\\titleformat\{\\subsection\}\{\\normalsize\\bfseries\}\{\}\{0em\}\{\}\
+\
+\\title\{\\textbf\{Reading Notes: GeCCo\}\\\\\
+\\large Guided Generation of Computational Cognitive Models\\\\[0.5em]\
+\\normalsize An Annotated Summary\}\
+\\author\{\}\
+\\date\{\}\
+\
+\\begin\{document\}\
+\
+\\maketitle\
+\\tableofcontents\
+\\newpage\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{Abstract \\& Overview\}\
+\
+The GeCCo pipeline uses Large Language Models (LLMs) to automatically generate, fit, and iteratively refine computational cognitive models as Python functions. Given a task description, participant behavioural data, and a template function, GeCCo prompts an LLM to propose candidate models, fits those proposals to held-out data, and refines them based on feedback derived from predictive performance.\
+\
+The approach was benchmarked across four cognitive domains---\\textbf\{decision making\}, \\textbf\{learning\}, \\textbf\{planning\}, and \\textbf\{memory\}---using three open-source LLMs of varying size, capacity, and training family. On all four human behavioural datasets, LLM-generated models consistently matched or outperformed the best domain-specific models from the literature, while remaining interpretable.\
+\
+\\textbf\{Code:\} \\url\{https://github.com/MilenaCCNlab/gecco.git\}\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{Motivation: The Bottleneck in Cognitive Modelling\}\
+\
+Computational cognitive models provide a formal framework for understanding human behaviour. In practice, researchers hand-craft these models, fit them to behavioural data, and iteratively refine them---a process that is:\
+\
+\\begin\{itemize\}\
+    \\item \\textbf\{Slow.\} Translating a psychological theory into a working algorithm requires lengthy literature reviews and repeated trial-and-error coding cycles.\
+    \\item \\textbf\{Skill-intensive.\} Researchers must simultaneously be domain experts, theoreticians, and software engineers---a rare combination.\
+    \\item \\textbf\{Biased by theoretical commitments.\} Researchers tend to explore only the model classes they already know and favour, potentially missing superior explanations for the data.\
+\\end\{itemize\}\
+\
+This ``streetlight effect'' artificially shrinks the space of models considered, motivating an automated approach that is not anchored to any particular theoretical school.\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{LLMs as a Solution\}\
+\
+Three specific LLM capabilities make them well-suited to cognitive model generation:\
+\
+\\begin\{enumerate\}\
+    \\item \\textbf\{Natural language flexibility.\} LLMs can process task descriptions and behavioural data written in plain English, adapting across diverse experimental paradigms without a custom interface for each.\
+    \\item \\textbf\{In-context pattern recognition.\} Drawing on broad pre-training knowledge, LLMs can identify structure in complex behavioural data and generate plausible psychological hypotheses.\
+    \\item \\textbf\{Code synthesis.\} LLMs can translate hypotheses directly into executable Python functions, closing the loop from theory to testable model instantly.\
+\\end\{enumerate\}\
+\
+These three abilities have already shown promise in automated statistical modelling (probabilistic program generation), and GeCCo applies the same logic to cognitive science.\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{The GeCCo Pipeline\}\
+\
+\\subsection\{Structure of Each Iteration\}\
+\
+Each pipeline run consists of \\textbf\{10 sampling iterations\}, repeated across \\textbf\{5 independent runs\} per domain. On every iteration the LLM receives a structured prompt containing:\
+\
+\\begin\{enumerate\}\
+    \\item A natural language \\textbf\{task description\}.\
+    \\item \\textbf\{Behavioural data\} from a subset of participants (the \\emph\{prompt\} split).\
+    \\item \\textbf\{Instructions and guardrails\} specifying the required Python function signature.\
+    \\item A \\textbf\{domain-specific template model\} for syntactic guidance.\
+    \\item \\textbf\{Iterative feedback\} (from iteration 2 onward): the current best-performing model and a list of previously used parameter names.\
+\\end\{enumerate\}\
+\
+The LLM generates \\textbf\{three distinct cognitive models\} with non-overlapping parameter sets.\
+\
+\\subsection\{Fitting and Evaluation\}\
+\
+Generated models are parsed and converted to executable Python via \\texttt\{exec()\}. Each model is then fit to a held-out \\emph\{validation\} dataset using \\texttt\{scipy.optimize.minimize\} initialised from 20 random starting points. Model quality is scored with the \\textbf\{Bayesian Information Criterion (BIC)\}---lower is better. The best-performing model is fed back into the next prompt.\
+\
+\\subsection\{Data Splits\}\
+\
+Three separate data partitions prevent data leakage:\
+\
+\\begin\{center\}\
+\\begin\{tabular\}\{lll\}\
+\\toprule\
+\\textbf\{Split\} & \\textbf\{Seen by LLM?\} & \\textbf\{Purpose\} \\\\\
+\\midrule\
+Prompt data     & Yes & Provides context for hypothesis generation \\\\\
+Validation data & No  & Scores candidate models during the loop \\\\\
+Test data       & No  & Final evaluation against human baselines \\\\\
+\\bottomrule\
+\\end\{tabular\}\
+\\end\{center\}\
+\
+\\subsection\{Fail-safes\}\
+\
+If a generated model contains syntax or runtime errors, the iteration restarts automatically---no human intervention required.\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{Metrics\}\
+\
+\\begin\{itemize\}\
+    \\item \\textbf\{BIC (Bayesian Information Criterion).\} Balances goodness of fit against model complexity by penalising the number of free parameters. When two models fit equally well, BIC favours the simpler one. The pipeline is metric-agnostic; AIC results are reported in Appendix~I.\
+    \\item \\textbf\{Exceedance Probability (EXP).\} Used in the final evaluation stage. Quantifies the posterior probability that a given model provides the most prevalent explanation of observed behaviour across the population, translating raw BIC scores into an interpretable confidence measure.\
+\\end\{itemize\}\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{Evaluation: Four Cognitive Domains\}\
+\
+Four canonical paradigms were selected to form an \\emph\{escalating complexity\} ladder---from static decisions to rich interactions between memory systems.\
+\
+\\subsection\{Experiment 1: Decision Making\}\
+\
+\\textbf\{Task.\} Participants chose between two options defined by four features, each with a different validity (importance). \\\\\
+\\textbf\{Baseline.\} The probabilistic Weighted Additive Decision (pWADD) model, which uses four separate parameters to weight the four features. \\\\\
+\\textbf\{Result.\} The Llama-generated model achieved a substantially lower BIC (39.40 vs.\\ 51.97; $p < .001$). \\\\\
+\\textbf\{Insight.\} The LLM reduced four parameters to one \\emph\{discount factor\} that smoothly interpolates between three classic decision strategies---\\emph\{Take the Best\}, \\emph\{Equal Weighting\}, and \\emph\{Weighted Additive\}---mirroring complex Bayesian inference but arriving at the solution naturally.\
+\
+\\subsection\{Experiment 2: Learning\}\
+\
+\\textbf\{Task.\} A two-armed bandit with full feedback: after each trial participants also saw what the unchosen option would have paid, introducing regret and relief. \\\\\
+\\textbf\{Baseline.\} A four-learning-rate variant of the Rescorla--Wagner model (RW$_\{4\\alpha\}$), plus a ``choice stickiness'' (perseveration) parameter. \\\\\
+\\textbf\{Result.\} BIC of 77.97 vs.\\ 85.24; EXP = 0.97. \\\\\
+\\textbf\{Insight.\} The LLM replaced the asymmetric learning rates with a clean separation between actual and counterfactual value traces (\\emph\{fictive trace\}), and replaced the perseveration hack with a psychologically motivated \\emph\{forgetting parameter\} that decays unchosen-option values over time---mirroring the limits of working memory.\
+\
+\\subsection\{Experiment 3: Planning\}\
+\
+\\textbf\{Task.\} The classic two-stage Daw task, in which choices lead to a second stage probabilistically, requiring forward planning. \\\\\
+\\textbf\{Baseline.\} A Hybrid model combining model-free (SARSA) and model-based value iteration, averaged by a weighting parameter. \\\\\
+\\textbf\{Result.\} BIC of 432.47 vs.\\ 437.38; EXP = 0.85. (The BIC difference did not reach conventional significance at $p = .27$, but the population-level advantage is clear in EXP.) \\\\\
+\\textbf\{Insight.\} The LLM unified the model-free/model-based dichotomy into a single system using two transition-dependent learning rates, and omitted the temporal discounting parameter, finding it unnecessary---aligning with recent theoretical calls to abandon strict dual-system accounts of planning.\
+\
+\\subsection\{Experiment 4: Working Memory\}\
+\
+\\textbf\{Task.\} Trial-and-error stimulus--response learning under varying cognitive load (3 vs.\\ 6 associations held in mind simultaneously). \\\\\
+\\textbf\{Baseline.\} The RL-WM model (Collins \\& Frank, 2012), in which a slow RL module and a fast but capacity-limited WM module operate independently, with a load-dependent mixing weight. \\\\\
+\\textbf\{Result.\} BIC of 267.25 vs.\\ 275.20; EXP = 0.99. \\\\\
+\\textbf\{Insight.\} Contrary to the standard assumption that RL is immune to cognitive load, the LLM's model assigned separate RL learning rates for low- and high-load conditions (\\texttt\{lr\\_low\} / \\texttt\{lr\\_high\}), discovering that load modulates the core learning signal---a conclusion consistent with neuroimaging evidence on reward prediction error signals.\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{Control Experiments\}\
+\
+\\subsection\{Contribution of LLM Features\}\
+\
+A mixed-effects regression predicting BIC from \\emph\{reasoning ability\}, \\emph\{model family\}, and \\emph\{model size\} found that:\
+\\begin\{itemize\}\
+    \\item Llama outperformed Qwen ($\\beta = 5.624$, $p = .03$) despite Qwen having more parameters, suggesting training data and protocol matter more than raw scale.\
+    \\item Reasoning ability showed a marginal advantage ($\\beta = -0.266$, $p = .07$).\
+\\end\{itemize\}\
+\
+\\subsection\{Prompt Ablation Study\}\
+\
+Systematically removing each prompt component and refitting a mixed-effects model on post-ablation BIC scores revealed the following ranked importance:\
+\
+\\begin\{center\}\
+\\begin\{tabular\}\{lrr\}\
+\\toprule\
+\\textbf\{Component\} & $\\boldsymbol\{\\beta\}$ & \\textbf\{p-value\} \\\\\
+\\midrule\
+Iterative feedback      & $-17.040$ & $< .05$ \\\\\
+Participant data        & $-12.836$ & $< .05$ \\\\\
+Task description        & $-9.834$  & $< .05$ \\\\\
+Code template           & $-9.359$  & $< .05$ \\\\\
+\\bottomrule\
+\\end\{tabular\}\
+\\end\{center\}\
+\
+\\emph\{Iterative feedback is the single most important driver of performance.\}\
+\
+\\subsection\{Data Contamination\}\
+\
+The LogProber method was applied to Llama prompts across all four domains. Acceleration scores were well below the contamination threshold of 1.0 (range: 0.017--0.648), confirming that the LLM is reasoning about novel problems rather than recalling memorised solutions.\
+\
+\\subsection\{Ground Truth Recovery\}\
+\
+On synthetic datasets with known generating processes, the LLM successfully reverse-engineered the true model in both learning (Rescorla--Wagner) and decision-making (Take the Best; Tallying) domains, validating the mathematical soundness of the approach.\
+\
+\\subsection\{Comparison with CENTAUR\}\
+\
+CENTAUR is a large foundation model trained to predict human behaviour across cognitive tasks, serving as a proxy for the ceiling of explainable variance. GeCCo matched or exceeded CENTAUR's negative log-likelihood across all four domains, while producing interpretable Python code rather than opaque model weights.\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section\{Discussion\}\
+\
+\\subsection\{Key Strengths\}\
+\
+\\begin\{itemize\}\
+    \\item \\textbf\{No fine-tuning required.\} GeCCo relies entirely on in-context learning with off-the-shelf open-source LLMs, making it immediately accessible to researchers without specialised ML infrastructure.\
+    \\item \\textbf\{Hybrid safety net.\} The LLM acts only as a \\emph\{proposal engine\}; all scoring is performed by traditional offline optimisation tools, preventing the model from evaluating its own outputs.\
+    \\item \\textbf\{Interpretability.\} Unlike black-box foundation models such as CENTAUR, GeCCo outputs human-readable Python functions that scientists can inspect, debate, and build upon.\
+    \\item \\textbf\{Speed.\} Convergence takes hours rather than the days required by evolutionary LLM-search alternatives.\
+\\end\{itemize\}\
+\
+\\subsection\{Limitations \\& Future Directions\}\
+\
+\\begin\{itemize\}\
+    \\item \\textbf\{Template bias.\} The domain-specific template in the prompt may anchor the LLM toward a particular model class. An ablation showed this has the smallest performance impact, and having the LLM generate its own template produces equivalent results (Appendix~J).\
+    \\item \\textbf\{Purely numerical feedback.\} The feedback loop currently only communicates BIC scores. Incorporating a second LLM as a ``peer reviewer''---providing feedback on theoretical plausibility, parsimony, and code quality---could further reduce the need for human oversight.\
+    \\item \\textbf\{Scope of domains.\} The current evaluation covers four controlled laboratory paradigms. Extension to language processing, perception, vision, and naturalistic real-world datasets is a priority for future work.\
+    \\item \\textbf\{High-dimensional models.\} Generating models with many parameters or operating on high-dimensional data (e.g.\\ vision) remains an open challenge.\
+\\end\{itemize\}\
+\
+\\subsection\{Broader Significance\}\
+\
+By removing the requirement to hand-craft code and by leveraging general-purpose open-source LLMs, GeCCo democratises access to sophisticated model discovery. Rather than spending months implementing and debugging theoretical models, researchers can use GeCCo to rapidly generate competing hypotheses and focus their effort on interpreting and extending the best ones---accelerating the pace of cognitive science.\
+\
+% \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\\section*\{Reference\}\
+\
+Milena et al.\\ (2024). \\textit\{GeCCo: Guided Generation of Computational Cognitive Models\}. Available at: \\url\{https://github.com/MilenaCCNlab/gecco.git\}\
+\
+\\end\{document\}}
