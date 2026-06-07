@@ -1,0 +1,127 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww34000\viewh17580\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \\documentclass[12pt]\{article\}\
+\\usepackage[utf8]\{inputenc\}\
+\\usepackage\{geometry\}\
+\\geometry\{a4paper, margin=1in\}\
+\\usepackage\{setspace\}\
+\\setstretch\{1.5\} % 1.5 spacing is easier to read while speaking\
+\\usepackage\{hyperref\}\
+\
+\\title\{Speaker Notes: Generating Computational Cognitive Models using LLMs\}\
+\\author\{Christian Block \\& YingZhu Chen\}\
+\\date\{\\today\}\
+\
+\\begin\{document\}\
+\
+\\maketitle\
+\
+\\section*\{Introduction \\& Timing Note\}\
+\\textbf\{Target Time:\} 15--17 minutes of speaking, followed by 3--5 minutes of Q\\&A. \\\\\
+\\textbf\{Pacing:\} Speak clearly, pause at slide transitions, and take time to explain the graphs and mathematical concepts. \
+\
+\\newpage\
+\
+\\section*\{Slide 1: Title Slide (1 minute)\}\
+\\textbf\{[Speaker 1:]\} \
+Good morning, everyone. Thank you for being here. Today, YingZhu and I will be presenting our seminar report on a fascinating new paper by Milena Rmus and colleagues, titled "Generating Computational Cognitive Models using Large Language Models." \
+\
+This paper sits at the intersection of artificial intelligence and psychology. It asks a provocative question: Can we automate the process of scientific discovery in cognitive science? Instead of humans manually writing mathematical equations to explain human behavior, can we use an AI to reverse-engineer the mind? Let's dive in.\
+\
+\\section*\{Slide 2: The Manual Bottleneck (1.5 minutes)\}\
+\\textbf\{[Speaker 1:]\}\
+To understand why this paper is important, we first have to understand how cognitive modeling is traditionally done. It is, frankly, a massive bottleneck. \
+\
+Traditionally, a researcher observes some human behavior, spends weeks reviewing literature, and then manually crafts a mathematical model. There are three major problems with this. First, it is slow and labor-intensive. Second, there's the "Streetlight Effect"\'97researchers are biased. We tend to look for answers where the light is best. If I am an expert in reinforcement learning, I will try to frame every behavioral problem as a reinforcement learning problem, ignoring other valid psychological mechanisms. \
+\
+Finally, the space of possible mathematical models is infinitely vast. Humans can only test a tiny fraction of them. We need a way to explore this "model space" systematically.\
+\
+\\section*\{Slide 3: Introducing GeCCo (1.5 minutes)\}\
+\\textbf\{[Speaker 2:]\}\
+This is where GeCCo comes in. GeCCo stands for the Guided generation of Computational Cognitive Models. \
+\
+At its core, GeCCo is an autonomous pipeline that uses Large Language Models\'97like Llama 3 or GPT-4\'97not as chatbots, but as hypothesis-generating engines. \
+\
+You feed the system two things: a text description of a psychological task, and raw behavioral data from human participants. The LLM then synthesizes a mathematical model, directly writing it as an executable Python function. The beauty of GeCCo is its iterative loop. It doesn't just guess once; it evolves candidate theories over multiple rounds of feedback.\
+\
+\\section*\{Slide 4: Technical Approach: Closing the Loop (2 minutes)\}\
+\\textbf\{[Speaker 2:]\}\
+Let's look at exactly how this loop works under the hood. \
+\
+In a single iteration, the LLM is prompted to propose three unique Python functions that could explain the data. These aren't just text; they are executable code. \
+\
+GeCCo then takes these functions offline. It uses SciPy to optimize the parameters of these functions against a held-out set of human data. To evaluate them, the system uses the Bayesian Information Criterion, or BIC. BIC is crucial here because it penalizes complexity. It forces the AI to find elegant, simple mathematical truths, rather than just adding a hundred parameters to overfit the data.\
+\
+Once the winning model of that round is identified by the lowest BIC score, GeCCo feeds that exact code, and its parameters, back into the LLM as a prompt, saying: "Here is your best model so far. Now, improve it or explore a different direction."\
+\
+\\section*\{Slide 5: Experiment 1: Decision Making (2 minutes)\}\
+\\textbf\{[Speaker 1:]\}\
+The authors tested GeCCo across four distinct cognitive domains. The first was multi-attribute decision-making. \
+\
+In this task, participants had to choose between two products based on four expert ratings. The ratings had varying levels of validity\'97say, 90\\%, 80\\%, 70\\%, and 60\\%. \
+\
+Historically, psychologists debated whether humans use "Take-the-Best" heuristics\'97looking only at the 90\\% expert\'97or "Equal Weighting," considering everyone equally. GeCCo bypassed this debate entirely. It discovered a single mathematical "discount factor." \
+\
+This discount factor exponentially decays the weight of less valid cues. What\'92s brilliant is that this single parameter smoothly interpolates between different human strategies. It showed that complex, bounded rational behavior could be explained by one elegant parameter, rather than a binary choice of heuristics.\
+\
+\\section*\{Slide 6: Experiment 2: Reinforcement Learning (2 minutes)\}\
+\\textbf\{[Speaker 1:]\}\
+Next, they looked at Reinforcement Learning using a classic multi-armed bandit task, essentially asking participants to figure out which "slot machine" pays out the most.\
+\
+The baseline for this in the literature is usually a variant of the Rescorla-Wagner model, often with asymmetric learning rates for positive and negative feedback. \
+\
+GeCCo, using the open-source Llama model, actually outperformed these highly tuned, expert-crafted baselines. It did so by introducing two novel mechanisms. First, a "forgetting parameter" for actions the participant didn't choose. Second, a "fictive trace"\'97meaning the model accounts for humans simulating counterfactuals: "What would have happened if I pulled the other lever?" \
+\
+\\section*\{Slide 7: Experiment 3: Two-Step Planning (2 minutes)\}\
+\\textbf\{[Speaker 2:]\}\
+The third experiment tackled planning, specifically the "Magic Carpet" task. This task is traditionally used to distinguish between "Model-Free" habits and "Model-Based" forward-planning. \
+\
+Psychology has long treated these as two separate, competing systems in the brain. GeCCo, however, unified them. \
+\
+The model it generated discarded the traditional temporal discounting parameters entirely. Instead, it used two transition-dependent learning rates. By focusing on how humans learn the underlying structure of the environment\'97the state transitions themselves\'97it reverse-engineered the problem in a way that unified habit and planning under a single computational framework.\
+\
+\\section*\{Slide 8: Experiment 4: Cognitive Load (2 minutes)\}\
+\\textbf\{[Speaker 2:]\}\
+Perhaps the most scientifically profound finding came from the fourth experiment, which combined reinforcement learning with working memory. \
+\
+Participants had to learn the value of shapes while keeping either 3 or 6 shapes in their working memory. Standard models in cognitive science assume that cognitive load simply reduces your memory capacity or adds noise to your choices. \
+\
+GeCCo discovered something fundamentally different. It found that high cognitive load directly modulates the Reinforcement Learning update signal itself\'97the Reward Prediction Error. \
+\
+Why is this a breakthrough? Because it perfectly aligns with recent, independent neuroimaging studies which show that dopaminergic prediction error signals in the brain are physically blunted when a person is under high cognitive load. The AI discovered a biological truth just from looking at behavioral keystrokes.\
+\
+\\section*\{Slide 9: Validation \\& Scientific Soundness (1.5 minutes)\}\
+\\textbf\{[Speaker 1:]\}\
+Of course, when an AI makes these claims, we have to verify them. The authors ran several rigorous controls.\
+\
+First, an ablation study proved that the iterative feedback loop\'97feeding the BIC score back to the LLM\'97is the absolute primary driver of performance. Without feedback, the LLM fails.\
+\
+Second, they checked for contamination. Is the LLM just regurgitating models it memorized from its training data? Using a metric called LogProber, they proved that the LLMs are actually engaging in logical reasoning and synthesis, not memorization. Finally, they proved GeCCo could achieve a 100\\% recovery rate on synthetic ground-truth datasets.\
+\
+\\section*\{Slide 10: Critical Assessment (1.5 minutes)\}\
+\\textbf\{[Speaker 1:]\}\
+As part of our seminar assignment, YingZhu and I critically assessed this pipeline. \
+\
+The biggest strength is interpretability. Unlike black-box neural networks, GeCCo outputs readable, executable Python code. We can inspect the exact math. \
+\
+However, there is a weakness: Template Bias. The current pipeline still relies on human researchers providing a basic Python template. This scaffolding might restrict the AI from exploring completely alien, but potentially accurate, mathematical spaces. \
+\
+Furthermore, while the AI is a fantastic proposal engine, humans are still required to look at the generated math and ask: "Does this make psychological and biological sense?"\
+\
+\\section*\{Slide 11: Conclusion (1 minute)\}\
+\\textbf\{[Speaker 2:]\}\
+To conclude, Rmus and colleagues have demonstrated a powerful proof-of-concept. LLMs can be transformed from simple text generators into automated scientific assistants. \
+\
+They help us bypass the streetlight effect, dramatically expand the space of theoretical possibilities, and bridge the gap between abstract psychological theory and rigorous, executable code. \
+\
+\\section*\{Slide 12: Q\\&A\}\
+\\textbf\{[Speaker 2:]\}\
+Thank you very much for your attention. We would now like to open the floor to any questions you might have about the GeCCo pipeline, the experiments, or our assessment.\
+\
+\\end\{document\}\
+}

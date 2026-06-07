@@ -1,0 +1,195 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \\documentclass\{beamer\}\
+\\usetheme\{Madrid\}\
+\\usecolortheme\{whale\}\
+\
+\\title[GeCCo: Automating Cognitive Science]\{Generating Computational Cognitive Models using Large Language Models\}\
+\\subtitle\{Seminar Presentation based on Rmus et al. (2025)\}\
+\\author\{Christian Block \\& YingZhu Chen\}\
+\\date\{\\today\}\
+\
+\\begin\{document\}\
+\
+\\begin\{frame\}\
+  \\titlepage\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{The Manual Bottleneck\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{Handcrafted Limits:\} Traditional modeling is slow, labor-intensive, and requires deep domain expertise.\
+    \\item \\textbf\{Theoretical Bias:\} Researchers fall victim to the ``Streetlight Effect''---ignoring alternative explanations outside their expertise.\
+    \\item \\textbf\{Translation Gap:\} Mapping psychological theories to executable algorithms often results in hidden assumptions.\
+    \\item \\textbf\{Model Space:\} Human limits prevent exploration of the vast mathematical space of behavior.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Introducing GeCCo\}\
+  \\textbf\{G\}uided g\\textbf\{e\}neration of \\textbf\{C\}omputational \\textbf\{Co\}gnitive Models\
+  \\vspace\{0.5cm\}\
+  \\begin\{itemize\}\
+    \\item Autonomous pipeline leveraging LLMs as hypothesis engines.\
+    \\item Synthesizes mathematical models directly as executable Python functions.\
+    \\item \\textbf\{Inputs:\} Task descriptions and human behavioral data.\
+    \\item \\textbf\{Process:\} Iterative performance feedback and evolutionary refinement over multiple sampling rounds.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Technical Approach: Closing the Loop\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{LLM Proposals:\} The base model generates 3 unique Python functions per iteration.\
+    \\item \\textbf\{Offline Fitting:\} SciPy optimizes the generated parameters against held-out validation data.\
+    \\item \\textbf\{Bayesian Selection:\} The Bayesian Information Criterion (BIC) evaluates and identifies the winning model.\
+    \\item \\textbf\{Recursive Feedback:\} The winning mathematical structure and parameters are fed back into the LLM to guide further exploration.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Exp 1: Decision Making\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{Task:\} Participants chose between products based on 4 expert ratings with varying validities.\
+    \\item \\textbf\{GeCCo's Discovery:\} Instead of a standard weighted additive model, GeCCo found a single \\textbf\{discount factor\}.\
+    \\item \\textbf\{Implication:\} This factor smoothly interpolates between \\textit\{Take-the-Best\} heuristics and \\textit\{Equal Weighting\}, simplifying a complex Bayesian inference problem into one elegant parameter.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Exp 2: Reinforcement Learning\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{Task:\} Multi-armed bandit tasks (choosing between slot machines).\
+    \\item \\textbf\{Baseline:\} Standard expert-crafted asymmetric learning models (e.g., RW-4$\\alpha$).\
+    \\item \\textbf\{GeCCo's Discovery:\} Introduced a \\textbf\{forgetting parameter\} for unchosen actions and a \\textbf\{fictive trace\} for counterfactual outcomes.\
+    \\item \\textbf\{Result:\} Outperformed human-crafted baselines significantly in BIC scores.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Exp 3: Two-Step Planning\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{Task:\} The ``Magic Carpet'' task testing Model-Free vs. Model-Based planning.\
+    \\item \\textbf\{GeCCo's Discovery:\} Unified the dual-system dichotomy using two \\textbf\{transition-dependent learning rates\}.\
+    \\item \\textbf\{Implication:\} Successfully reverse-engineered the underlying state-transition structure without relying on standard temporal discounting parameters used in literature.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Exp 4: Cognitive Load \\& Working Memory\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{Task:\} RL-WM task juggling 3 or 6 shapes simultaneously.\
+    \\item \\textbf\{Assumption:\} Standard models assume cognitive load only affects memory capacity.\
+    \\item \\textbf\{GeCCo's Discovery:\} High load directly modulates the \\textbf\{RL learning signal\} itself.\
+    \\item \\textbf\{Implication:\} Matches recent neuroimaging evidence showing reward prediction error (RPE) signals are blunted under high cognitive load.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Scientific Soundness\}\
+  \\begin\{table\}\
+    \\centering\
+    \\renewcommand\{\\arraystretch\}\{1.5\}\
+    \\begin\{tabular\}\{|l|p\{6.5cm\}|\}\
+      \\hline\
+      \\textbf\{Control Test\} & \\textbf\{Result / Implication\} \\\\\
+      \\hline\
+      Ablation Study & Iterative feedback loop is the primary driver of discovery performance. \\\\\
+      \\hline\
+      Contamination & LLMs are logically reasoning, not just memorizing training data (LogProber $< 1.0$). \\\\\
+      \\hline\
+      Ground Truth & Successfully reverse-engineered synthetic datasets (100\\% recovery rate). \\\\\
+      \\hline\
+      Explainable Var. & Matches SOTA foundation models (CENTAUR) but outputs interpretable math. \\\\\
+      \\hline\
+    \\end\{tabular\}\
+  \\end\{table\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Critical Assessment\}\
+  \\begin\{itemize\}\
+    \\item \\textbf\{Interpretability (+):\} Outputs executable Python, allowing researchers to thoroughly inspect the mathematical equations behind the behavior.\
+    \\item \\textbf\{Template Bias (-):\} The current pipeline heavily depends on human-provided code templates, potentially restricting the overarching model space.\
+    \\item \\textbf\{Human Role (Neutral):\} AI acts as a rapid proposal engine, but domain experts remain vital for judging the ``psychological plausibility'' of the math.\
+  \\end\{itemize\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Conclusion\}\
+  \\vspace\{1cm\}\
+  \\begin\{quote\}\
+    \\Large ``LLMs have the potential to democratize complex scientific discovery and accelerate the pace of cognitive science.'' \
+    \
+    \\normalsize \\hfill -- Rmus et al., 2025\
+  \\end\{quote\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\
+  \\centering\
+  \\Huge \\textbf\{Questions?\}\
+  \\normalsize\
+  \\vspace\{1cm\}\
+  \
+  Thank you for your attention.\
+  \
+  \\vspace\{0.5cm\}\
+  \\small christian.block@university.edu | yingzhu.chen@university.edu\
+\\end\{frame\}\
+\
+% ---------------------------------------------------------\
+% BACKUP SLIDES \
+% ---------------------------------------------------------\
+\\appendix\
+\
+\\begin\{frame\}[plain]\
+  \\centering\
+  \\Huge \\textbf\{Backup Slides: Mathematical Definitions\}\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Backup: Bayesian Information Criterion (BIC)\}\
+  The \\textbf\{Bayesian Information Criterion (BIC)\} is a criterion for model selection among a finite set of models. GeCCo uses it to heavily penalize unnecessary complexity.\
+  \\vspace\{0.5cm\}\
+  \
+  \\textbf\{Mathematical Definition:\}\
+  $$\\text\{BIC\} = k \\ln(n) - 2 \\ln(\\hat\{L\})$$\
+  \
+  \\begin\{itemize\}\
+      \\item $k$: Number of parameters estimated by the model.\
+      \\item $n$: Number of data points (behavioral observations).\
+      \\item $\\hat\{L\}$: The maximized value of the likelihood function of the model.\
+  \\end\{itemize\}\
+  \\vspace\{0.5cm\}\
+  \\textit\{Role in GeCCo:\} By minimizing BIC, GeCCo is guided towards models that fit the data well without overfitting, favoring elegant, generalizable mathematical formulations.\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Backup: Rescorla-Wagner \\& Prediction Error\}\
+  The baseline for Reinforcement Learning tasks (Exp 2 \\& 4) is built on the \\textbf\{Rescorla-Wagner\} model.\
+  \\vspace\{0.5cm\}\
+  \
+  \\textbf\{Value Update Rule:\}\
+  $$V_\{t+1\} = V_t + \\alpha \\delta_t$$\
+  $$\\delta_t = (R_t - V_t)$$\
+  \
+  \\begin\{itemize\}\
+      \\item $V_t$: The expected value estimate at time $t$.\
+      \\item $\\alpha$: The learning rate ($0 \\leq \\alpha \\leq 1$).\
+      \\item $R_t$: The actual reward received.\
+      \\item $\\delta_t$: The Reward Prediction Error (RPE).\
+  \\end\{itemize\}\
+  \\vspace\{0.5cm\}\
+  \\textit\{Role in Exp 4:\} GeCCo discovered that under high cognitive load, the effective RPE ($\\delta_t$) computation itself is diminished, directly connecting behavioral modeling to dopaminergic neural constraints.\
+\\end\{frame\}\
+\
+\\begin\{frame\}\{Backup: Discounting Factor in Decision Making\}\
+  In Experiment 1, GeCCo found a continuous discounting formulation rather than discrete heuristic boundaries.\
+  \\vspace\{0.5cm\}\
+  \
+  \\textbf\{Simplified Cue Weighting:\}\
+  $$W_i = \\gamma^\{i-1\} \\cdot V_i$$\
+  \
+  \\begin\{itemize\}\
+      \\item $W_i$: The applied weight of the $i$-th cue.\
+      \\item $\\gamma$: The discovered \\textbf\{discount factor\} ($0 \\leq \\gamma \\leq 1$).\
+      \\item $V_i$: The inherent validity of the $i$-th cue.\
+  \\end\{itemize\}\
+  \\vspace\{0.5cm\}\
+  \\textit\{Implication:\} If $\\gamma \\to 0$, it acts like \\textit\{Take-the-Best\} (only the first cue matters). If $\\gamma \\to 1$, it mirrors \\textit\{Equal Weighting\}. This single parameter captures a spectrum of bounded rational behavior.\
+\\end\{frame\}\
+\
+\\end\{document\}}
