@@ -1,3 +1,101 @@
+\begin{filecontents*}{references.bib}
+@article{rmus2025generating,
+  title={Generating Computational Cognitive Models using Large Language Models},
+  author={Rmus, Milena and Mathony, Marvin and Jagadish, Akshay K. and Ludwig, Tobias and Schulz, Eric},
+  journal={arXiv preprint arXiv:2502.00879},
+  year={2025}
+}
+@article{castro2025discovering,
+  title={Discovering symbolic cognitive models from human and animal behavior},
+  author={Castro, Pablo Samuel and Tomasev, Nenad and Anand, Ankit and Sharma, Navodita and others},
+  journal={bioRxiv},
+  year={2025},
+  publisher={Cold Spring Harbor Laboratory}
+}
+@article{lueckmann2026discovering,
+  title={Discovering mechanistic models of neural activity: System identification in an in silico zebrafish},
+  author={Lueckmann, Jan-Matthis and Jain, Viren and Januszewski, Micha{\l}},
+  journal={arXiv preprint arXiv:2602.04492},
+  year={2026}
+}
+@article{tilbury2025ai,
+  title={AI-discovered tuning laws explain neuronal population code geometry},
+  author={Tilbury, Reilly and Kwon, Dabin and Haydaro{\u{g}}lu, Ali and Ratliff, Jacob and others},
+  journal={bioRxiv},
+  year={2025},
+  publisher={Cold Spring Harbor Laboratory}
+}
+@article{luo2025large,
+  title={Large language models surpass human experts in predicting neuroscience results},
+  author={Luo, Xiaoliang and Rechardt, Akilles and Sun, Guangzhi and Nejad, Kevin K. and others},
+  journal={Nature Human Behaviour},
+  year={2025},
+  publisher={Nature Publishing Group}
+}
+@article{luppi2025cognitive,
+  title={Cognitive cartography of mammalian brains using meta-analysis of AI experts},
+  author={Luppi, Andrea I. and Ali, Hana and Liu, Zhen-Qi and Milisav, Filip and others},
+  journal={bioRxiv},
+  year={2025},
+  publisher={Cold Spring Harbor Laboratory}
+}
+@article{ghayem2026neurocontext,
+  title={NeuroConText: Contrastive learning for neuroscience meta-analysis with rich text representation},
+  author={Ghayem, Fateme and Meudec, Rapha{\"e}l and Dock{\`e}s, J{\'e}r{\^o}me and Thirion, Bertrand and Wassermann, Demian},
+  journal={Imaging Neuroscience},
+  year={2026},
+  publisher={MIT Press}
+}
+@article{wang2025foundation,
+  title={Foundation model of neural activity predicts response to new stimulus types},
+  author={Wang, Eric Y. and Fahey, Paul G. and Ding, Zhuokun and Papadopoulos, Stelios and others},
+  journal={Nature},
+  year={2025},
+  publisher={Nature Publishing Group}
+}
+@article{ryoo2025generalizable,
+  title={Generalizable, real-time neural decoding with hybrid state-space models},
+  author={Ryoo, Avery Hee-Woon and Krishna, Nanda H. and Mao, Ximeng and Azabou, Mehdi and others},
+  journal={arXiv preprint arXiv:2506.05320},
+  year={2025}
+}
+@article{wairagkar2025instantaneous,
+  title={An instantaneous voice-synthesis neuroprosthesis},
+  author={Wairagkar, Maitreyee and Card, Nicholas S. and Singer-Clark, Tyler and Hou, Xianda and others},
+  journal={Nature},
+  year={2025},
+  publisher={Nature Publishing Group}
+}
+@article{collins2012cognitive,
+  title={Cognitive control over learning: Creating, clustering, and generalizing task-set structure},
+  author={Collins, Anne GE and Frank, Michael J},
+  journal={Psychological review},
+  volume={119},
+  number={4},
+  pages={890},
+  year={2012},
+  publisher={American Psychological Association}
+}
+@article{meta2024llama3,
+  title={The Llama 3 Herd of Models},
+  author={Dubey, Abhimanyu and Jauhri, Abhinav and Pandey, Abhinav and Kadian, Abhishek and others},
+  journal={arXiv preprint arXiv:2407.21783},
+  year={2024}
+}
+@article{guo2025deepseek,
+  title={DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning},
+  author={Guo, Daya and Shao, Jianhong and Yuan, Peiyi and Xiong, Chuang and others},
+  journal={arXiv preprint arXiv:2501.12948},
+  year={2025}
+}
+@article{yang2024qwen25,
+  title={Qwen2. 5 technical report},
+  author={Yang, An and Yang, Baosong and Hui, Binyuan and Zheng, Bo and Yu, Bowen and others},
+  journal={arXiv preprint arXiv:2412.13663},
+  year={2024}
+}
+\end{filecontents*}
+
 \documentclass[12pt, a4paper]{article}
 
 \usepackage[margin=2.5cm]{geometry}
@@ -9,6 +107,7 @@
 \usepackage{xcolor}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage[round]{natbib} % Added for proper citation formatting
 
 \hypersetup{
     colorlinks=true,
@@ -31,10 +130,11 @@ using Large Language Models}}\\
 
 \maketitle
 \tableofcontents
+
 % ─────────────────────────────────────────────────────────────
 \section{Executive Summary}
 
-The pipeline proposed in  \textit{Generating Computational Cognitive Models
+The pipeline proposed in \textit{Generating Computational Cognitive Models
 using Large Language Models} (GeCCo) uses Large Language Models (LLMs) to automatically generate, fit, and iteratively refine computational cognitive models as Python functions. Given a task description, participant behavioural data, and a template function, the pipeline in GeCCo prompts an LLM to propose candidate models, fits those proposals to held-out data, and refines them based on feedback derived from predictive performance.
 
 The approach was benchmarked across four cognitive domains---decision making, learning, planning, and memory---using three open-source LLMs of varying parameter size, capacity, and training procedure. On all four human behavioural datasets, LLM-generated models consistently matched or outperformed the best domain-specific models from the cognitive-science literature, while remaining interpretable.
@@ -42,20 +142,18 @@ The approach was benchmarked across four cognitive domains---decision making, le
 % ─────────────────────────────────────────────────────────────
 \section{Motivation}
 
-Computational cognitive models provide a formal framework for understanding human behaviour. In practice, researchers hand-craft these models, fit them to behavioural data, and iteratively refine them. This process is slow, skill-intensive, and systematically biased due to person's past exposure to the cognitive literature. Translating a psychological theory into a working algorithm requires lengthy literature reviews and repeated coding cycles. Researchers must simultaneously act as domain experts in cognitive science, theoreticians for data modeling, and software engineers for implementation. Perhaps most importantly, researchers tend to explore only the model classes they already know and favour, potentially missing alternative explanations for the data. The  aforementioned limitations limit the space of models considered, motivating an automated approach that is not biased towards any particular school of thought in theoretical cognitive scienece.\\
+Computational cognitive models provide a formal framework for understanding human behaviour. In practice, researchers hand-craft these models, fit them to behavioural data, and iteratively refine them. This process is slow, skill-intensive, and systematically biased due to a person's past exposure to the cognitive literature. Translating a psychological theory into a working algorithm requires lengthy literature reviews and repeated coding cycles. Researchers must simultaneously act as domain experts in cognitive science, theoreticians for data modeling, and software engineers for implementation. Perhaps most importantly, researchers tend to explore only the model classes they already know and favour, potentially missing alternative explanations for the data. The aforementioned limitations limit the space of models considered, motivating an automated approach that is not biased towards any particular school of thought in theoretical cognitive science.\\
 
-Three specific LLM capabilities make them well-suited for propsoing cognitive models for experimental data.\footnote{ The models were used: LLMs: Llama-3.1-Instruct-70B (Llama; Meta Plat-
-forms 2024, DeepSeek-R1-Distill-Llama-3.1-70B (R1; Guo et al. 2025), and Qwen2.5-72B-Instruct
-(Qwen; Yang et al. 2024). } First, LLMs can process task descriptions and behavioural data written in natural language, which make it highly adaptable across different experimental paradigms without the need to provide custom interface. Second, drawing on broad pre-training knowledge, they can identify structure in complex behavioural data and generate plausible psychological hypotheses derived from the training data. Third, LLMs can translate those hypotheses directly into executable Python functions. These three abilities have already been utilitzed in automated statistical modelling through probabilistic program generation, and GeCCo applies the same logic to cognitive science.
+Three specific LLM capabilities make them well-suited for proposing cognitive models for experimental data.\footnote{The models used were: Llama-3.1-Instruct-70B \citep{meta2024llama3}, DeepSeek-R1-Distill-Llama-3.1-70B \citep{guo2025deepseek}, and Qwen2.5-72B-Instruct \citep{yang2024qwen25}.} First, LLMs can process task descriptions and behavioural data written in natural language, which makes them highly adaptable across different experimental paradigms without the need to provide a custom interface. Second, drawing on broad pre-training knowledge, they can identify structure in complex behavioural data and generate plausible psychological hypotheses derived from the training data. Third, LLMs can translate those hypotheses directly into executable Python functions. These three abilities have already been utilized in automated statistical modelling through probabilistic program generation, and GeCCo applies the same logic to cognitive science.
 
 % ─────────────────────────────────────────────────────────────
-\section{ GeCCo's Proposed Pipeline}
+\section{GeCCo's Proposed Pipeline}
 
 Each pipeline run consists of 10 sampling iterations, repeated across 5 independent runs per beforementioned cognitive domain. The process begins by providing the base LLM with a fixed prompt containing a natural language task description, a subset of behavioral data, strict instructions, a domain-specific code template, and starting from the second iteration onwards, iterative feedback. Using this information, the LLM generates three unique cognitive models, ensuring that each features a non-overlapping set of parameters. \\
 
 Once generated, these models are parsed from the response, converted into executable Python functions, and have their specific parameter names extracted. They are then fitted to a held-out validation dataset that was deliberately excluded from the initial prompt. To prevent the models from getting stuck in local minima, this fitting process is initialized from 20 random starting points.\\
 
-After the fitting stage, the models are evaluated using the Bayesian Information Criterion (BIC) to identify the single best-performing candidate among the three. Finally, the code for this winning model, along with a list of previously used parameter names, is gathered to act as feedback. This feedback is then injected into the prompt for the next iteration, effectively guiding the LLM's future proposals and preventing it from duplicating its past ideas
+After the fitting stage, the models are evaluated using the Bayesian Information Criterion (BIC) to identify the single best-performing candidate among the three. Finally, the code for this winning model, along with a list of previously used parameter names, is gathered to act as feedback. This feedback is then injected into the prompt for the next iteration, effectively guiding the LLM's future proposals and preventing it from duplicating its past ideas.
 
 \section{Experiments}
 
@@ -63,7 +161,7 @@ Two complementary metrics are used throughout the evaluation. BIC balances goodn
 
 \subsection{Experiment 1: Decision Making}
 
-People were asked to choose between two fake products (Option A and Option B). They were given ratings from four different "experts," but they were also told that some experts were more trustworthy (had higher "validity") than others. The baseline was the probabilistic Weighted Additive Decision  model, which uses four separate parameters to weight the four features. The Llama-generated model achieved a substantially lower BIC (39.40 vs.\ 51.97; $p < .001$). Rather than requiring four parameters, the LLM reduced the problem to a single \emph{discount factor} that smoothly interpolates between three classic decision strategies---\emph{Take the Best}, \emph{Equal Weighting}, and \emph{Weighted Additive}---mirroring complex Bayesian inference but arriving at the solution naturally.
+People were asked to choose between two fake products (Option A and Option B). They were given ratings from four different "experts," but they were also told that some experts were more trustworthy (had higher "validity") than others. The baseline was the probabilistic Weighted Additive Decision model, which uses four separate parameters to weight the four features. The Llama-generated model achieved a substantially lower BIC (39.40 vs.\ 51.97; $p < .001$). Rather than requiring four parameters, the LLM reduced the problem to a single \emph{discount factor} that smoothly interpolates between three classic decision strategies---\emph{Take the Best}, \emph{Equal Weighting}, and \emph{Weighted Additive}---mirroring complex Bayesian inference but arriving at the solution naturally.
 
 \subsection{Experiment 2: Learning}
 
@@ -75,19 +173,15 @@ This is a two-step puzzle game. Participants pick a "magic carpet," which usuall
 
 \subsection{Experiment 4: Working Memory}
 
-People had to learn through trial-and-error which button to press when shown different shapes on a screen. Sometimes they only had to juggle 3 shapes in their head (low cognitive load), and sometimes they had to juggle 6 shapes (high cognitive load). The baseline was the RL-WM model (Collins \& Frank, 2012), in which a slow RL module and a fast but capacity-limited WM module operate independently, with a load-dependent mixing weight. The Llama-generated model outperformed the baseline substantially (BIC 267.25 vs.\ 275.20; EXP = 0.99). Contrary to the standard assumption that reinforcement learning is immune to cognitive load, the LLM's model assigned separate RL learning rates for low- and high-load conditions (\texttt{lr\_low} / \texttt{lr\_high}), discovering that load modulates the core learning signal---a conclusion consistent with neuroimaging evidence on reward prediction error signals.
+People had to learn through trial-and-error which button to press when shown different shapes on a screen. Sometimes they only had to juggle 3 shapes in their head (low cognitive load), and sometimes they had to juggle 6 shapes (high cognitive load). The baseline was the RL-WM model \citep{collins2012cognitive}, in which a slow RL module and a fast but capacity-limited WM module operate independently, with a load-dependent mixing weight. The Llama-generated model outperformed the baseline substantially (BIC 267.25 vs.\ 275.20; EXP = 0.99). Contrary to the standard assumption that reinforcement learning is immune to cognitive load, the LLM's model assigned separate RL learning rates for low- and high-load conditions (\texttt{lr\_low} / \texttt{lr\_high}), discovering that load modulates the core learning signal---a conclusion consistent with neuroimaging evidence on reward prediction error signals.
 
 \section{Control Experiments}
 
-
 A mixed-effects regression predicting BIC from \emph{reasoning ability}, \emph{model family}, and \emph{model size} found that Llama outperformed Qwen ($\beta = 5.624$, $p = .03$) despite Qwen having more parameters, suggesting that training data and protocol matter more than raw scale. Reasoning ability showed only a marginal advantage ($\beta = -0.266$, $p = .07$), falling short of conventional significance.
-
 
 Systematically removing each prompt component and refitting a mixed-effects model on post-ablation BIC scores revealed that all four components contribute meaningfully, though with different magnitudes. Iterative feedback was the strongest single driver of performance ($\beta = -17.040$, $p < .05$), followed by participant data ($\beta = -12.836$, $p < .05$), task description ($\beta = -9.834$, $p < .05$), and the code template ($\beta = -9.359$, $p < .05$). The dominance of the feedback component confirms that the iterative refinement loop---not merely the quality of the initial prompt---is what separates GeCCo from a single-shot query.
 
-
 The LogProber method was applied to Llama prompts across all four domains. Acceleration scores were well below the contamination threshold of 1.0 (range: 0.017--0.648), confirming that the LLM is reasoning about novel problems rather than recalling memorised solutions from pretraining.
-
 
 On synthetic datasets with known generating processes, the LLM successfully reverse-engineered the true model in both learning (Rescorla--Wagner) and decision-making (Take the Best; Tallying) domains, validating the mathematical soundness of the approach.
 
@@ -108,11 +202,20 @@ Finally, the study is limited in scope because it evaluated four specific, contr
 \subsection*{Context Within Related Work}
 This iterative optimization paradigm closely mirrors the broader industry shift toward recursive self-improvement models and automated research engines, such as Sakana AI's ``The AI Scientist'', Google DeepMind's autonomous research loops for scientific discovery, and Anthropic's research into iterative code-refinement. These modern frameworks employ an AI system to continuously write, test, critique, and upgrade its own code to automate the scientific pipeline. GeCCo successfully adapts this concept to the behavioral sciences by turning the LLM into a rapid hypothesis proposal engine. Crucially, whereas generalized self-improvement models risk hallucination or runaway optimization errors when critiquing themselves, GeCCo introduces a vital safeguard: the self-improvement cycle is anchored in a hybrid loop, where standard, rigid statistical frameworks provide the objective ground-truth feedback that drives the AI's refinement process.
 
-\subsection{Connection to other Papers in the Seminar (TBC)}
+\subsection{Connection to other Papers in the Seminar}
+The work by \citet{rmus2025generating} introduces a framework for generating computational cognitive models using Large Language Models (LLMs), moving the field from manually handcrafted theories to automated, AI-driven model discovery based on task instructions and behavioral data. This approach is part of a broader paradigm shift in cognitive science and neuroscience, and its relationship to the other provided papers can be understood through several distinct themes: direct methodological parallels, cross-scale model discovery, the expanding role of LLMs in science, and the bridging of top-down and bottom-up neural research.
+
+\citet{rmus2025generating} shares the most direct methodological and conceptual parallel with the research by \citet{castro2025discovering}. Both papers tackle the complex challenge of discovering symbolic cognitive models directly from human and animal behavior. While traditional cognitive science relies on human intuition to formalize theories, both Rmus and Castro demonstrate that modern AI algorithms can autonomously propose, fit, and evaluate mathematical models that explain learning and decision-making processes. They collectively establish a new standard for automated theory building in behavioral science.
+
+This theme of AI-driven automated discovery extends beyond behavior down to the level of neural circuits, linking \citet{rmus2025generating} to the works of \citet{lueckmann2026discovering} and \citet{tilbury2025ai}. While Rmus focuses on high-level cognitive architectures, Lueckmann and Tilbury utilize AI systems and LLM-based tree searches to discover mechanistic models and tuning laws for neural activity. Together, these papers illustrate a unified methodological trend across scales: whether predicting whole-organism behavior or visual cortical neuronal firing rates, AI is increasingly being used to distill complex biological data into parsimonious, interpretable mathematical equations.
+
+Furthermore, \citet{rmus2025generating} exemplifies the growing utility of LLMs as active scientific reasoning engines, a concept heavily supported by several other papers in this collection. \citet{luo2025large} demonstrate that LLMs can surpass human experts in predicting the outcomes of neuroscience experiments, proving that these models possess a deep, actionable understanding of the domain. Similarly, \citet{luppi2025cognitive} and \citet{ghayem2026neurocontext} utilize LLMs and rich text representations to synthesize vast amounts of complex neuroscience literature, performing meta-analyses and mapping cognitive functions to brain regions. Viewed alongside these works, Rmus et al. represents the next logical step: upgrading LLMs from passive synthesizers of existing literature to active generators of novel scientific hypotheses and code.
+
+Finally, the top-down cognitive modeling approach of \citet{rmus2025generating} provides a necessary complement to the bottom-up neural decoding and foundation models explored in the remaining literature. Papers by \citet{wang2025foundation}, \citet{ryoo2025generalizable}, and \citet{wairagkar2025instantaneous} focus intensely on raw neural data, utilizing foundation models and hybrid state-space models to decode brain activity for neuroprostheses and real-time predictions. While these papers excel at translating neural spikes into variables like speech or stimuli, they often lack explicit cognitive frameworks. \citet{rmus2025generating} provides the computational cognitive architectures that could eventually be mapped onto the neural dynamics decoded by these other models. In summary, Rmus et al. serves as a crucial behavioral anchor in a scientific landscape that is rapidly adopting AI to map the brain, decode its signals, and discover its fundamental laws.
 
 % ─────────────────────────────────────────────────────────────
-\section*{Reference}
-
-Rmus et al.\ (2024). \textit{GeCCo: Guided Generation of Computational Cognitive Models}. Available at: \url{https://github.com/MilenaCCNlab/gecco.git}
+\newpage
+\bibliographystyle{apalike}
+\bibliography{references}
 
 \end{document}
